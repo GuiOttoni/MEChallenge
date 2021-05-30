@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MEChallenge.Pedido.Domain.Interfaces.Service;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,13 @@ namespace MEChallenge.Pedido.Controllers
     [ApiController]
     public class StatusController : ControllerBase
     {
+        private readonly IPedidoService _pedidoService;
+
+        public StatusController(IPedidoService pedidoService) : base()
+        {
+            _pedidoService = pedidoService;
+        }
+
         // GET: api/<StatusController>
         [HttpGet]
         public IEnumerable<string> Get()

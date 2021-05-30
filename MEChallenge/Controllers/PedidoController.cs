@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MEChallenge.Pedido.Domain.Interfaces.Service;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,13 @@ namespace MEChallenge.Pedido.Controllers
     [ApiController]
     public class PedidoController : ControllerBase
     {
+        private readonly IPedidoService _pedidoService;
+
+        public PedidoController(IPedidoService pedidoService) : base()
+        {
+            _pedidoService = pedidoService;
+        }
+
         // GET: api/<PedidoController>
         [HttpGet]
         public IEnumerable<string> Get()
@@ -28,8 +36,17 @@ namespace MEChallenge.Pedido.Controllers
 
         // POST api/<PedidoController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([FromBody] Domain.Model.Pedido payload)
         {
+            try
+            {
+
+            }
+            catch (Exception x)
+            {
+
+            }
+            return Ok();
         }
 
         // PUT api/<PedidoController>/5

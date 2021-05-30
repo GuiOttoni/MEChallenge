@@ -7,15 +7,17 @@ using System.Text;
 
 namespace MEChallenge.Pedido.Infra.Services
 {
-    public class PedidoService : BaseService,IPedidoService
+    public class PedidoService : BaseService, IPedidoService
     {
         private readonly IPedidoRepository _pedidoRepository;
-        private readonly IStatusRepository _statusRepository;
+        private readonly IStatusService _statusRepository;
 
-        public PedidoService(IPedidoRepository pedidoRepository, IStatusRepository statusRepository) : base()
+        public PedidoService(IPedidoRepository pedidoRepository, IStatusService statusRepository) : base()
         {
             _pedidoRepository = pedidoRepository;
             _statusRepository = statusRepository;
         }
+
+        
     }
 }

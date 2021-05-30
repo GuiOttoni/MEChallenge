@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MEChallenge.Pedido.Infra.Repository
 {
@@ -13,6 +14,31 @@ namespace MEChallenge.Pedido.Infra.Repository
         public PedidoRepository(IConfiguration configuration) : base(configuration)
         {
 
+        }
+
+        public async Task AdicionaPedido(Domain.Model.Pedido )
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task AtualizaPedido(Domain.Model.Pedido pedido)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task BuscaPedido(string idPedido)
+        {
+            throw new NotImplementedException();
+        } 
+
+        public async Task BuscaTodosPedidos()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task DeletaPedido(string idPedido)
+        {
+            throw new NotImplementedException();
         }
     }
 }

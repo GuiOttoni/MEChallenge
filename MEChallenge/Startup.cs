@@ -38,7 +38,7 @@ namespace MEChallenge
             });
 
             services.AddTransient<IPedidoRepository, PedidoRepository>();
-            services.AddTransient<IStatusRepository, StatusRepository>();
+            services.AddTransient<IStatusService, StatusService>();
             services.AddTransient<IPedidoService, PedidoService>();
         }
 
