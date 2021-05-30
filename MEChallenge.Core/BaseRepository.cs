@@ -13,7 +13,7 @@ namespace MEChallenge.Core
         public BaseRepository(IConfiguration configuration)
         {
             _config = configuration;
-            _connectionString = _config.GetConnectionString("");
+            _connectionString = _config.GetConnectionString("Sqlite");
         }
     }
 }

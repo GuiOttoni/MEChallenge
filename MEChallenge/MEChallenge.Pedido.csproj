@@ -11,4 +11,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MEChallenge.Core\MEChallenge.Core.csproj" />
+    <ProjectReference Include="..\Pedido.Domain\MEChallenge.Pedido.Domain.csproj" />
+    <ProjectReference Include="..\Pedido.Infra\MEChallenge.Pedido.Infra.csproj" />
+  </ItemGroup>
+
 </Project>
