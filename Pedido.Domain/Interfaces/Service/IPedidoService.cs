@@ -15,4 +15,3 @@ namespace MEChallenge.Pedido.Domain.Interfaces.Service
         public Task<IEnumerable<Model.Pedido>> BuscaTodosPedidos();
     }
 }
-}

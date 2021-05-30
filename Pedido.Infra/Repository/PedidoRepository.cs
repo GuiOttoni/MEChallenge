@@ -1,5 +1,7 @@
-﻿using MEChallenge.Core;
+﻿using Dapper;
+using MEChallenge.Core;
 using MEChallenge.Pedido.Domain.Interfaces.Repository;
+using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -26,14 +28,24 @@ namespace MEChallenge.Pedido.Infra.Repository
             throw new NotImplementedException();
         }
 
-        public async Task BuscaPedido(string idPedido)
+        public async Task<Domain.Model.Pedido> BuscaPedido(string idPedido)
         {
             throw new NotImplementedException();
         } 
 
-        public async Task BuscaTodosPedidos()
+        public async Task<IEnumerable<Domain.Model.Pedido>> BuscaTodosPedidos()
         {
-            throw new NotImplementedException();
+            try
+            {
+                using SqliteConnection sqlConnection = new SqliteConnection(_connectionString);
+
+                return await sqlConnection.QueryAsync<Domain.Model.Pedido>($"SELECT * FROM [Pedido]");
+            }
+            catch
+            {
+                //Add Logging
+                throw;
+            }
         }
 
         public async Task DeletaPedido(string idPedido)

@@ -22,9 +22,16 @@ namespace MEChallenge.Pedido.Controllers
 
         // GET: api/<PedidoController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IActionResult> Get()
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                return Ok(await _pedidoService.BuscaTodosPedidos());
+            }
+            catch(Exception x)
+            {
+                return BadRequest();
+            } 
         }
 
         // GET api/<PedidoController>/5
