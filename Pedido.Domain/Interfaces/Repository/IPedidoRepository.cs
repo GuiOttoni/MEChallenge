@@ -7,10 +7,10 @@ namespace MEChallenge.Pedido.Domain.Interfaces.Repository
 {
     public interface IPedidoRepository
     {
-        public Task AdicionaPedido(Model.Pedido);
-        public Task BuscaPedido(string idPedido);
+        public Task AdicionaPedido(Model.Pedido pedido);
+        public Task<Model.Pedido> BuscaPedido(string idPedido);
         public Task AtualizaPedido(Model.Pedido pedido);
         public Task DeletaPedido(string idPedido);
-        public Task BuscaTodosPedidos();
+        public Task<IEnumerable<Model.Pedido>> BuscaTodosPedidos();
     }
 }

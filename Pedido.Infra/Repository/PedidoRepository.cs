@@ -16,7 +16,7 @@ namespace MEChallenge.Pedido.Infra.Repository
 
         }
 
-        public async Task AdicionaPedido(Domain.Model.Pedido )
+        public async Task AdicionaPedido(Domain.Model.Pedido pedido)
         {
             throw new NotImplementedException();
         }
