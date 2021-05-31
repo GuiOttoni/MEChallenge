@@ -86,8 +86,11 @@ inner join Item I on IP.IdItem = I.IdItem
                     },
                     param: new { IdPedido = idPedido },
                     splitOn: "IdPedido");
-                var pedido = x.AsList().First();
-                pedido.Itens = itens;
+                var pedido = x.AsList().FirstOrDefault();
+
+                if(pedido is not null)
+                    pedido.Itens = itens;
+
                 return pedido;
             }
             catch

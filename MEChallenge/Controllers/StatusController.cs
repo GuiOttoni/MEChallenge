@@ -13,43 +13,25 @@ namespace MEChallenge.Pedido.Controllers
     [ApiController]
     public class StatusController : ControllerBase
     {
-        private readonly IPedidoService _pedidoService;
+        private readonly IStatusService _statusService;
 
-        public StatusController(IPedidoService pedidoService) : base()
+        public StatusController(IStatusService statusService) : base()
         {
-            _pedidoService = pedidoService;
-        }
-
-        // GET: api/<StatusController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<StatusController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
+            _statusService = statusService;
         }
 
         // POST api/<StatusController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([FromBody] Domain.Payload.StatusPayload status)
         {
-        }
-
-        // PUT api/<StatusController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<StatusController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            try
+            {
+                return Ok(await _statusService.VerificarStatus(status));
+            }
+            catch (Exception x)
+            {
+                return BadRequest();
+            }
         }
     }
 }

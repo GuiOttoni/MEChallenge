@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace MEChallenge.Pedido.Domain.Payload
 {
-    public class StatusPayload
+    public class StatusResponse
     {
-        public string Status { get; set; }
-        public int ItensAprovados { get; set; }
-        public int ValorAprovado { get; set; }
         public string Pedido { get; set; }
+        public List<string> Status { get; set; }
     }
 }
