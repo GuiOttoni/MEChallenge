@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MEChallenge.Pedido.Domain.Interfaces.Service;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,36 +13,25 @@ namespace MEChallenge.Pedido.Controllers
     [ApiController]
     public class StatusController : ControllerBase
     {
-        // GET: api/<StatusController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        private readonly IStatusService _statusService;
 
-        // GET api/<StatusController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        public StatusController(IStatusService statusService) : base()
         {
-            return "value";
+            _statusService = statusService;
         }
 
         // POST api/<StatusController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([FromBody] Domain.Payload.StatusPayload status)
         {
-        }
-
-        // PUT api/<StatusController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<StatusController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            try
+            {
+                return Ok(await _statusService.VerificarStatus(status));
+            }
+            catch (Exception x)
+            {
+                return BadRequest();
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MEChallenge.Pedido.Domain.Interfaces.Service;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,36 +13,84 @@ namespace MEChallenge.Pedido.Controllers
     [ApiController]
     public class PedidoController : ControllerBase
     {
+        private readonly IPedidoService _pedidoService;
+
+        public PedidoController(IPedidoService pedidoService) : base()
+        {
+            _pedidoService = pedidoService;
+        }
+
         // GET: api/<PedidoController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IActionResult> Get()
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                return Ok(await _pedidoService.BuscaTodosPedidos());
+            }
+            catch(Exception x)
+            {
+                return BadRequest();
+            } 
         }
 
         // GET api/<PedidoController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<IActionResult> Get(string id)
         {
-            return "value";
+            try
+            {
+                return Ok(await _pedidoService.BuscaPedido(id));
+            }
+            catch (Exception x)
+            {
+                return BadRequest();
+            }
         }
 
         // POST api/<PedidoController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([FromBody] Domain.Payload.PedidoPayload payload)
         {
+            try
+            {
+                await _pedidoService.AdicionaPedido(payload);
+            }
+            catch (Exception x)
+            {
+
+            }
+            return Ok();
         }
 
         // PUT api/<PedidoController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put([FromBody] Domain.Payload.PedidoPayload payload)
         {
+            try
+            {
+                await _pedidoService.AtualizaPedido(payload);
+            }
+            catch (Exception x)
+            {
+
+            }
+            return Ok();
         }
 
         // DELETE api/<PedidoController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(string id)
         {
+            try
+            {
+                await _pedidoService.DeletaPedido(id);
+            }
+            catch (Exception x)
+            {
+
+            }
+            return Ok();
         }
     }
 }

@@ -1,3 +1,7 @@
+using MEChallenge.Pedido.Domain.Interfaces.Repository;
+using MEChallenge.Pedido.Domain.Interfaces.Service;
+using MEChallenge.Pedido.Infra.Repository;
+using MEChallenge.Pedido.Infra.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,6 +36,10 @@ namespace MEChallenge
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MEChallenge", Version = "v1" });
             });
+
+            services.AddTransient<IPedidoRepository, PedidoRepository>();
+            services.AddTransient<IStatusService, StatusService>();
+            services.AddTransient<IPedidoService, PedidoService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

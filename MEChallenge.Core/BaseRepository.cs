@@ -9,11 +9,11 @@ namespace MEChallenge.Core
     {
         internal IConfiguration _config;
 
-        internal readonly string _connectionString;
+        protected readonly string _connectionString;
         public BaseRepository(IConfiguration configuration)
         {
             _config = configuration;
-            _connectionString = _config.GetConnectionString("");
+            _connectionString = _config.GetConnectionString("Sqlite");
         }
     }
 }

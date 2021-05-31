@@ -7,6 +7,7 @@ namespace MEChallenge.Pedido.Domain.Model
     public class Pedido
     {
         public string IdPedido { get; set; }
-        public IEnumerable<Item> Itens { get; set; }
+        public string Status { get; set; }
+        public List<Item> Itens { get; set; }
     }
 }
