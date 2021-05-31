@@ -68,7 +68,7 @@ namespace MEChallenge.Pedido.Infra.Repository
 
         public async Task<Domain.Model.Pedido> BuscaPedido(string idPedido)
         {
-            string query = $@"select P.IdPedido, IP.*, I.Descricao, I.PrecoUnitario from Pedido P
+            string query = $@"select P.IdPedido, P.Status, IP.*, I.Descricao, I.PrecoUnitario from Pedido P
 inner join ItensPedido IP on P.IdPedido = IP.IdPedido 
 inner join Item I on IP.IdItem = I.IdItem 
                               Where P.IdPedido = @IdPedido";
@@ -88,8 +88,14 @@ inner join Item I on IP.IdItem = I.IdItem
                     splitOn: "IdPedido");
                 var pedido = x.AsList().FirstOrDefault();
 
-                if(pedido is not null)
-                    pedido.Itens = itens;
+                if (pedido is not null)
+                {
+                    pedido.Itens = itens.GroupBy(x => x.IdItem).Select(p => {
+                        var item = p.FirstOrDefault();
+                        item.Qtd = p.Count();
+                        return item;
+                    }).ToList();
+                }
 
                 return pedido;
             }

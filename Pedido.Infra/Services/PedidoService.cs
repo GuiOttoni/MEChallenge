@@ -41,11 +41,7 @@ namespace MEChallenge.Pedido.Infra.Services
         {
             var ped = await _pedidoRepository.BuscaPedido(idPedido);
 
-            ped.Itens = ped.Itens.GroupBy(x => x.IdItem).Select( p => {
-                var item = p.FirstOrDefault();
-                item.Qtd = p.Count();
-                return item;
-            }).ToList();
+            
 
             return ped;
         }
