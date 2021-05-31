@@ -50,7 +50,7 @@ namespace MEChallenge.Pedido.Infra.Services
             return resposta;
         }
 
-        private List<string> VerificaStatus(Domain.Model.Pedido pedido, StatusPayload status)
+        public List<string> VerificaStatus(Domain.Model.Pedido pedido, StatusPayload status)
         {
             var lista = new List<string>();
             var quantidadeItens = pedido.Itens.Sum(p => p.Qtd);
