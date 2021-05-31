@@ -114,7 +114,36 @@ inner join Item I on IP.IdItem = I.IdItem
 
         public async Task DeletaPedido(string idPedido)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using SqliteConnection sqlConnection = new SqliteConnection(_connectionString);
+
+                await sqlConnection.ExecuteAsync(@$"DELETE FROM ItensPedido
+                                                    WHERE IdPedido = @IdPedido
+                        ", new { IdPedido = idPedido });
+            }
+            catch
+            {
+                //Add Logging
+                throw;
+            }
+        }
+
+        public async Task DeletaItemPedido(string idPedido)
+        {
+            try
+            {
+                using SqliteConnection sqlConnection = new SqliteConnection(_connectionString);
+
+                await sqlConnection.ExecuteAsync(@$"DELETE FROM Pedido
+                                                    WHERE IdPedido = @IdPedido
+                       ", new { IdPedido = idPedido });
+            }
+            catch
+            {
+                //Add Logging
+                throw;
+            }
         }
     }
 }

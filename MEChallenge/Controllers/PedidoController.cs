@@ -65,14 +65,32 @@ namespace MEChallenge.Pedido.Controllers
 
         // PUT api/<PedidoController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put([FromBody] Domain.Payload.PedidoPayload payload)
         {
+            try
+            {
+                await _pedidoService.AtualizaPedido(payload);
+            }
+            catch (Exception x)
+            {
+
+            }
+            return Ok();
         }
 
         // DELETE api/<PedidoController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(string id)
         {
+            try
+            {
+                await _pedidoService.DeletaPedido(id);
+            }
+            catch (Exception x)
+            {
+
+            }
+            return Ok();
         }
     }
 }

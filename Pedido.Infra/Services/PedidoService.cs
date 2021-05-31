@@ -28,9 +28,13 @@ namespace MEChallenge.Pedido.Infra.Services
             }
         }
 
-        public async Task AtualizaPedido(Domain.Model.Pedido pedido)
+        public async Task AtualizaPedido(Domain.Payload.PedidoPayload pedido)
         {
-            await _pedidoRepository.AtualizaPedido(pedido);
+            await _pedidoRepository.DeletaItemPedido(pedido.IdPedido);
+            for (int i = 0; i < pedido.IdItens.Length; i++)
+            {
+                await _pedidoRepository.AdicionaItemPedido(pedido.IdPedido, pedido.IdItens[i]);
+            }
         }
 
         public async Task<Domain.Model.Pedido> BuscaPedido(string idPedido)
@@ -54,6 +58,7 @@ namespace MEChallenge.Pedido.Infra.Services
         public async Task DeletaPedido(string idPedido)
         {
             await _pedidoRepository.DeletaPedido(idPedido);
+            await _pedidoRepository.DeletaItemPedido(idPedido);
         }
     }
 }

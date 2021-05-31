@@ -10,7 +10,7 @@ namespace MEChallenge.Pedido.Domain.Interfaces.Service
 
         public Task AdicionaPedido(Payload.PedidoPayload pedido);
         public Task<Domain.Model.Pedido> BuscaPedido(string idPedido);
-        public Task AtualizaPedido(Model.Pedido pedido);
+        public Task AtualizaPedido(Domain.Payload.PedidoPayload pedido);
         public Task DeletaPedido(string idPedido);
         public Task<IEnumerable<Model.Pedido>> BuscaTodosPedidos();
     }
