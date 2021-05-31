@@ -36,18 +36,25 @@ namespace MEChallenge.Pedido.Controllers
 
         // GET api/<PedidoController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<IActionResult> Get(string id)
         {
-            return "value";
+            try
+            {
+                return Ok(await _pedidoService.BuscaPedido(id));
+            }
+            catch (Exception x)
+            {
+                return BadRequest();
+            }
         }
 
         // POST api/<PedidoController>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Domain.Model.Pedido payload)
+        public async Task<IActionResult> Post([FromBody] Domain.Payload.PedidoPayload payload)
         {
             try
             {
-
+                await _pedidoService.AdicionaPedido(payload);
             }
             catch (Exception x)
             {

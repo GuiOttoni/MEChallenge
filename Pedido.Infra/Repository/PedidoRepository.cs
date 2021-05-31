@@ -5,6 +5,7 @@ using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,9 +19,46 @@ namespace MEChallenge.Pedido.Infra.Repository
 
         }
 
-        public async Task AdicionaPedido(Domain.Model.Pedido pedido)
+        public async Task AdicionaPedido(Domain.Payload.PedidoPayload pedido)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using SqliteConnection sqlConnection = new SqliteConnection(_connectionString);
+
+                await sqlConnection.ExecuteAsync(@$"INSERT INTO Pedido (
+                       IdPedido
+                   )
+                   VALUES(
+                       @IdPedido
+                   ); ", new { IdPedido = pedido.IdPedido });
+            }
+            catch
+            {
+                //Add Logging
+                throw;
+            }
+        }
+
+        public async Task AdicionaItemPedido(string IdPedido, int IdItem)
+        {
+            try
+            {
+                using SqliteConnection sqlConnection = new SqliteConnection(_connectionString);
+
+                await sqlConnection.ExecuteAsync(@$"INSERT INTO ItensPedido (
+                            IdPedido,
+                            IdItem
+                        )
+                        VALUES (
+                            @IdPedido,
+                            @IdItem
+                        );", new { IdPedido = IdPedido, IdItem = IdItem });
+            }
+            catch
+            {
+                //Add Logging
+                throw;
+            }
         }
 
         public async Task AtualizaPedido(Domain.Model.Pedido pedido)
@@ -30,7 +68,33 @@ namespace MEChallenge.Pedido.Infra.Repository
 
         public async Task<Domain.Model.Pedido> BuscaPedido(string idPedido)
         {
-            throw new NotImplementedException();
+            string query = $@"select P.IdPedido, IP.*, I.Descricao, I.PrecoUnitario from Pedido P
+inner join ItensPedido IP on P.IdPedido = IP.IdPedido 
+inner join Item I on IP.IdItem = I.IdItem 
+                              Where P.IdPedido = @IdPedido";
+
+            var itens = new List<Domain.Model.Item>();
+
+            try
+            {
+                using SqliteConnection sqlConnection = new SqliteConnection(_connectionString);
+                var x = await sqlConnection.QueryAsync<Domain.Model.Pedido, Domain.Model.Item, Domain.Model.Pedido>(query,
+                    (P, IP) =>
+                    {
+                        itens.Add(IP);
+                        return P;
+                    },
+                    param: new { IdPedido = idPedido },
+                    splitOn: "IdPedido");
+                var pedido = x.AsList().First();
+                pedido.Itens = itens;
+                return pedido;
+            }
+            catch
+            {
+                //Add Logging
+                throw;
+            }
         } 
 
         public async Task<IEnumerable<Domain.Model.Pedido>> BuscaTodosPedidos()

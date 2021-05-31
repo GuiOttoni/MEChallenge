@@ -3,6 +3,7 @@ using MEChallenge.Pedido.Domain.Interfaces.Repository;
 using MEChallenge.Pedido.Domain.Interfaces.Service;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,9 +18,14 @@ namespace MEChallenge.Pedido.Infra.Services
             _pedidoRepository = pedidoRepository;
         }
 
-        public async Task AdicionaPedido(Domain.Model.Pedido pedido)
+        public async Task AdicionaPedido(Domain.Payload.PedidoPayload pedido)
         {
             await _pedidoRepository.AdicionaPedido(pedido);
+
+            for (int i = 0; i < pedido.IdItens.Length; i++)
+            {
+                await _pedidoRepository.AdicionaItemPedido(pedido.IdPedido, pedido.IdItens[i]);
+            }
         }
 
         public async Task AtualizaPedido(Domain.Model.Pedido pedido)
@@ -29,7 +35,15 @@ namespace MEChallenge.Pedido.Infra.Services
 
         public async Task<Domain.Model.Pedido> BuscaPedido(string idPedido)
         {
-            return await _pedidoRepository.BuscaPedido(idPedido);
+            var ped = await _pedidoRepository.BuscaPedido(idPedido);
+
+            ped.Itens = ped.Itens.GroupBy(x => x.IdItem).Select( p => {
+                var item = p.FirstOrDefault();
+                item.Qtd = p.Count();
+                return item;
+            }).ToList();
+
+            return ped;
         }
 
         public async Task<IEnumerable<Domain.Model.Pedido>> BuscaTodosPedidos()
