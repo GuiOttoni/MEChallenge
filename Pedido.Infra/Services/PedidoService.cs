@@ -41,8 +41,6 @@ namespace MEChallenge.Pedido.Infra.Services
         {
             var ped = await _pedidoRepository.BuscaPedido(idPedido);
 
-            
-
             return ped;
         }
 
