@@ -13,6 +13,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MEChallenge.Pedido.Test", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MEChallenge.Core", "MEChallenge.Core\MEChallenge.Core.csproj", "{9760C5E1-F17A-4029-96F4-6A541E6A0A05}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{511F8998-2669-433A-917B-4F485D0416A0}"
+	ProjectSection(SolutionItems) = preProject
+		instructions.md = instructions.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
